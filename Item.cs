@@ -9,17 +9,11 @@ namespace TEXTRPG
 {
     public interface IItem
     {
-        string Name { get; }
-        void Use();
-    }
+        string name { get; }
+        string toolTip { get; }
+        int price { get; set; }
 
-    public class Item
-    {
-
-    }
-
-    public class Equipment
-    {
-
+        void Use(ICharacter ch);
+        void Remove(ICharacter ch);
     }
 }

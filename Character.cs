@@ -12,29 +12,15 @@ namespace TEXTRPG
         string name { get; }
         int health { get; set; }
         int attack { get; set; }
+        int gold { get; set; }
         bool isDead { get; }
 
+        List<IItem> items { get; set; }
+
+        IItem weapon { get; set; }
+        IItem armor { get; set; }
+
         void TakeDamage(int damage);
-    }
-
-
-    public class NonPlayableCharacter : ICharacter
-    {
-        public string name { get; }
-        public int health { get; set; }
-        public int attack { get; set; }
-        public bool isDead { get; }
-        public List<Item> items;
-
-        public void TakeDamage(int damage)
-        {
-
-        }
-
-        public NonPlayableCharacter(string _name)
-        {
-            name = _name;
-        }
     }
 
     public class PlayerCharacter : ICharacter
@@ -42,33 +28,62 @@ namespace TEXTRPG
         public string name { get; }
         public int health { get; set; }
         public int attack { get; set; }
-        public bool isDead { get; }
+        public int gold { get; set; }
+        public bool isDead => health <= 0;
+
+        public List<IItem> items { get; set; }
+
+        public IItem weapon { get; set; }
+        public IItem armor { get; set; }
+
 
         public void TakeDamage(int damage)
         {
 
         }
-        public PlayerCharacter()
+
+        public PlayerCharacter(string name)
         {
-            name = _name;
+            this.name = name;
+            this.health = 10;
+            this.attack = 2;
+            this.gold = 300;
+            this.items = new List<IItem>();
         }
     }
 
-    public class Monster : ICharacter
+
+    public class Merchant : ICharacter
     {
         public string name { get; }
         public int health { get; set; }
         public int attack { get; set; }
-        public bool isDead { get; }
+        public int gold { get; set; }
+        public bool isDead => health <= 0;
+
+        public List<IItem> items { get; set; }
+
+        public IItem weapon { get; set; }
+        public IItem armor { get; set; }
+
 
         public void TakeDamage(int damage)
         {
 
         }
 
-        public Monster()
+        public Merchant(string name)
         {
-            name = _name;
+            this.name = name;
+            this.health = 10;
+            this.attack = 2;
+            this.gold = 1000;
+            this.items = new List<IItem>();
+            this.items.Add(new Stick());
+            this.items.Add(new Sword());
+            this.items.Add(new IronArmor());
+            this.items.Add(new HealingPotion());
         }
     }
+
 }

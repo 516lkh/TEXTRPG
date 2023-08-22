@@ -10,54 +10,31 @@ namespace TEXTRPG
     {
         public static void Main()
         {
+            TextRPGGame game = new TextRPGGame();
 
+            game.GameStart();
         }
 
     }
 
-    public class TRGame
+    public class TextRPGGame
     {
-        public static void GameStart()
+        public void GameStart()
         {
-            while (true) 
-            {
-                
+            string input;
 
-            }
+            ICharacter player = new PlayerCharacter("플레이어");
+            ICharacter merchant = new Merchant("상인");
+
+            //IUserInterface mainInterface = new MainInterface();
+            //mainInterface.Draw();
+
+
+            StageShop shop = new StageShop(player, merchant);
+            shop.Start();
         }
 
     }
 
-    public interface IUserInterface
-    {
-        char sym { get; }
-        int horizontal { get; set; }
-        int vertical { get; set; }
-
-        public void Draw();
-        public void Clear();
-    }
-
-    public class MainInterface:IUserInterface
-    {
-        public char sym { get; }
-        public int horizontal { get; set; }
-        public int vertical { get; set; }
-
-        MainInterface()
-        {
-
-        }
-
-        public void Draw()
-        {
-
-        }
-
-        public void Clear()
-        {
-
-        }
-    }
 
 }
