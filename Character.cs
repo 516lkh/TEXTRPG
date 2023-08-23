@@ -81,6 +81,8 @@ namespace TEXTRPG
 
 
             Console.WriteLine((++i).ToString() + ". 뒤로");
+            Console.WriteLine("");
+            Console.Write("원하시는 행동을 선택해주세요 >> ");
 
             input = Cal.CheckValidInput(1, i);
             Console.Clear();
@@ -95,6 +97,8 @@ namespace TEXTRPG
                 Console.WriteLine("1. 장비 장착");
                 Console.WriteLine("2. 버리기");
                 Console.WriteLine("3. 뒤로");
+                Console.WriteLine("");
+                Console.Write("원하시는 행동을 선택해주세요 >> ");
 
                 int input2 = Cal.CheckValidInput(1, 3);
                 Console.Clear();
@@ -118,6 +122,9 @@ namespace TEXTRPG
                 Console.WriteLine("1. 소모품 사용");
                 Console.WriteLine("2. 버리기");
                 Console.WriteLine("3. 뒤로");
+                Console.WriteLine("");
+                Console.Write("원하시는 행동을 선택해주세요 >> ");
+
 
                 int input2 = Cal.CheckValidInput(1, 3);
                 Console.Clear();

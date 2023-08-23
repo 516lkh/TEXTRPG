@@ -30,6 +30,8 @@ namespace TEXTRPG
                 Console.WriteLine("2. 던전 가기");
                 Console.WriteLine("3. 상태 보기");
                 Console.WriteLine("4. 인벤토리 확인");
+                Console.WriteLine("");
+                Console.Write("원하시는 행동을 선택해주세요 >> ");
 
                 int input = Cal.CheckValidInput(1, 4);
                 Console.Clear();
@@ -85,6 +87,8 @@ namespace TEXTRPG
                 Console.WriteLine("1. 아이템을 산다");
                 Console.WriteLine("2. 아이템을 판다");
                 Console.WriteLine("3. 나간다");
+                Console.WriteLine("");
+                Console.Write("원하시는 행동을 선택해주세요 >> ");
 
                 int input = Cal.CheckValidInput(1, 3);
                 Console.Clear();
@@ -102,8 +106,11 @@ namespace TEXTRPG
                                 " (" + item.price + " GOLD)");
                         }
                         Console.WriteLine((++i).ToString() + ". 뒤로");
+                        Console.WriteLine("");
+                        Console.Write("원하시는 행동을 선택해주세요 >> ");
 
                         input = Cal.CheckValidInput(1, i);
+                        Console.Clear();
                         if (input == i) break;
 
                         Trade(player, merchant, merchant.items[input - 1]);
@@ -121,8 +128,11 @@ namespace TEXTRPG
                                 " (" + item.price + " GOLD)");
                         }
                         Console.WriteLine((++i).ToString() + ". 뒤로");
+                        Console.WriteLine("");
+                        Console.Write("원하시는 행동을 선택해주세요 >> ");
 
                         input = Cal.CheckValidInput(1, i);
+                        Console.Clear();
                         if (input == i) break;
 
                         Trade(merchant, player, player.items[input - 1]);
