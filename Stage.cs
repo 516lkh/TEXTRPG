@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace TEXTRPG
 {
+    public class StageStart
+    {
+
+    }
+
     public class StageShop
     {
         private ICharacter player;
@@ -46,8 +51,11 @@ namespace TEXTRPG
                             Console.WriteLine(i.ToString() + ". " + item.name + 
                                 " (" + item.price + " GOLD)");
                         }
+                        Console.WriteLine((++i).ToString() + " 뒤로");
+
                         input = Console.ReadLine();
 
+                        if (int.Parse(input) == i) break;
                         Trade(player, merchant, merchant.items[int.Parse(input)-1]);
 
                         break;
@@ -59,7 +67,11 @@ namespace TEXTRPG
                             Console.WriteLine(i.ToString() + ". " + item.name + 
                                 " (" + item.price + " GOLD)");
                         }
+                        Console.WriteLine((++i).ToString() + " 뒤로");
+
                         input = Console.ReadLine();
+
+                        if (int.Parse(input) == i) break;
 
                         Trade(merchant, player, player.items[int.Parse(input) - 1]);
                         break;
@@ -83,12 +95,17 @@ namespace TEXTRPG
                 buyer.items.Add(item);
                 seller.gold += item.price;
                 seller.items.Remove(item);
-                Console.WriteLine(item.name + "을 샀습니다 " +
+
+                Console.WriteLine(buyer.name +  " : " + item.name + "을 샀습니다 \n" +
                     "(" + buyer.name + " 남은 골드 " + buyer.gold + ")\n" +
-                    seller.name + " 남은 골드 " + seller.gold + ")\n");
-            } else { Console.WriteLine(buyer.name + "의 돈이 부족합니다! " +
-                "(" + buyer.name + " 남은 골드 " + buyer.gold + ")\n" +
-                    seller.name + " 남은 골드 " + seller.gold + ")\n"); }
+                    "(" + seller.name + " 남은 골드 " + seller.gold + ")\n");
+            }
+            else
+            {
+                Console.WriteLine(buyer.name + "의 돈이 부족합니다! \n" +
+                    "(" + buyer.name + " 남은 골드 " + buyer.gold + ")\n" +
+                    "(" + seller.name + " 남은 골드 " + seller.gold + ")\n");
+            }
         }
     }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TEXTRPG
 {
-    public class HealingPotion : IItem
+    public class HealingPotion : Consumable
     {
-        public string name { get; }
-        public string toolTip { get; }
-        public int price { get; set; }
+        public override string name { get; }
+        public override string toolTip { get; }
+        public override int price { get; set; }
 
         public HealingPotion()
         {
@@ -19,24 +19,19 @@ namespace TEXTRPG
             price = 10;
         }
 
-        public void Use(ICharacter ch)
+        public override void Use(ICharacter ch)
         {
             Console.WriteLine(this.name + "을 사용했습니다.");
             ch.health += 3;
             ch.items.Remove(this);
         }
-
-        public void Remove(ICharacter ch)
-        {
-            
-        }
     }
 
-    public class IronArmor : IItem
+    public class IronArmor : Armor
     {
-        public string name { get; }
-        public string toolTip { get; }
-        public int price { get; set; }
+        public override string name { get; }
+        public override string toolTip { get; }
+        public override int price { get; set; }
 
         public IronArmor()
         {
@@ -45,17 +40,17 @@ namespace TEXTRPG
             price = 100;
         }
 
-        public void Use(ICharacter ch)
+        public override void Equip(ICharacter ch)
         {
-            Remove(ch);
+            Unclothe(ch);
 
-            Console.WriteLine(ch.armor.name + "를 장착했습니다.");
+            Console.WriteLine(this.name + "를 장착했습니다.");
             ch.armor = this;
             ch.health += 10;
             ch.items.Remove(this);
         }
 
-        public void Remove(ICharacter ch)
+        public override void Unclothe(ICharacter ch)
         {
             if (ch.weapon != null)
             {
@@ -68,11 +63,11 @@ namespace TEXTRPG
     }
 
 
-    public class Stick : IItem
+    public class Stick : Weapon
     {
-        public string name { get; }
-        public string toolTip { get; }
-        public int price { get; set; }
+        public override string name { get; }
+        public override string toolTip { get; }
+        public override int price { get; set; }
 
         public Stick()
         {
@@ -81,17 +76,17 @@ namespace TEXTRPG
             price = 1;
         }
 
-        public void Use(ICharacter ch)
+        public override void Equip(ICharacter ch)
         {
-            Remove(ch);
+            Unclothe(ch);
 
-            Console.WriteLine(ch.weapon.name + "를 장착했습니다.");
+            Console.WriteLine(this.name + "를 장착했습니다.");
             ch.weapon = this;
             ch.attack += 1;
             ch.items.Remove(this);
         }
 
-        public void Remove(ICharacter ch)
+        public override void Unclothe(ICharacter ch)
         {
             if (ch.weapon != null)
             {
@@ -103,11 +98,11 @@ namespace TEXTRPG
         }
     }
 
-    public class Sword : IItem
+    public class Sword : Weapon
     {
-        public string name { get; }
-        public string toolTip { get; }
-        public int price { get; set; }
+        public override string name { get; }
+        public override string toolTip { get; }
+        public override int price { get; set; }
 
         public Sword()
         {
@@ -116,21 +111,21 @@ namespace TEXTRPG
             price = 60;
         }
 
-        public void Use(ICharacter ch)
+        public override void Equip(ICharacter ch)
         {
-            Remove(ch);
+            Unclothe(ch);
 
-            Console.WriteLine(ch.weapon.name + "를 장착했습니다.");
+            Console.WriteLine(this.name + "를 장착했습니다.");
             ch.weapon = this;
             ch.attack += 10;
             ch.items.Remove(this);
         }
 
-        public void Remove(ICharacter ch)
+        public override void Unclothe(ICharacter ch)
         {
             if (ch.weapon != null)
             {
-                Console.WriteLine(ch.weapon.name + "를 해제했습니다.");
+                Console.WriteLine(this.name + "를 해제했습니다.");
                 ch.attack -= 10;
                 ch.items.Add(ch.weapon);
                 ch.weapon = null;

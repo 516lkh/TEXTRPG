@@ -49,6 +49,9 @@ namespace TEXTRPG
             this.attack = 2;
             this.gold = 300;
             this.items = new List<IItem>();
+
+            this.weapon = null;
+            this.armor = null;
         }
     }
 
