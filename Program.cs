@@ -14,27 +14,39 @@ namespace TEXTRPG
 
             game.GameStart();
         }
-
     }
+
 
     public class TextRPGGame
     {
         public void GameStart()
         {
-            string input;
+            PlayerCharacter player = new PlayerCharacter("플레이어");
 
-            ICharacter player = new PlayerCharacter("플레이어");
-            ICharacter merchant = new Merchant("상인");
-
-            //IUserInterface mainInterface = new MainInterface();
-            //mainInterface.Draw();
+            StageStart stageStart = new StageStart(player);
+            stageStart.Start();
 
 
-            StageShop shop = new StageShop(player, merchant);
-            shop.Start();
         }
-
     }
+    
+    public class Cal
+    {
+        public static int CheckValidInput(int min, int max)
+        {
+            while (true)
+            {
+                string input = Console.ReadLine();
 
+                bool parseSuccess = int.TryParse(input, out var ret);
+                if (parseSuccess)
+                {
+                    if (ret >= min && ret <= max)
+                        return ret;
+                }
 
+                Console.WriteLine("잘못된 입력입니다.");
+            }
+        }
+    }
 }

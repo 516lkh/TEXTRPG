@@ -9,6 +9,51 @@ namespace TEXTRPG
     public class StageStart
     {
 
+        private PlayerCharacter player;
+
+
+        public StageStart(PlayerCharacter player)
+        {
+            this.player = player;
+        }
+
+
+        public void Start()
+        {
+            Console.WriteLine("게임 시작!\n");
+            Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
+            Console.WriteLine("이곳에서 던전으로 들어가기 전 활동을 할 수 있습니다.\n");
+            while (true)
+            {
+                Console.WriteLine("<스파르타 마을>\n");
+                Console.WriteLine("1. 상점 가기");
+                Console.WriteLine("2. 던전 가기");
+                Console.WriteLine("3. 상태 보기");
+                Console.WriteLine("4. 인벤토리 확인");
+
+                int input = Cal.CheckValidInput(1, 4);
+                Console.Clear();
+
+                switch (input)
+                {
+                    case 1:
+                        ICharacter merchant = new Merchant("상인");
+                        StageShop shop = new StageShop(player, merchant);
+                        shop.Start();
+                        continue;
+                    case 2:
+                        Console.WriteLine("미완성입니다.");
+                        continue;
+                    case 3:
+                        player.CaracterInfo();
+                        continue;
+                    case 4:
+                        player.InventoryInfo();
+                        continue;
+                }
+
+            }
+        }
     }
 
     public class StageShop
@@ -28,62 +73,67 @@ namespace TEXTRPG
 
         public void Start()
         {
-            string input;
+
             int i;
 
 
-            Console.WriteLine("상점 도착!");
+            
 
             while (true)
             {
+                Console.WriteLine("<상점>\n");
                 Console.WriteLine("1. 아이템을 산다");
                 Console.WriteLine("2. 아이템을 판다");
                 Console.WriteLine("3. 나간다");
 
-                input = Console.ReadLine();
-                switch(int.Parse(input)) 
+                int input = Cal.CheckValidInput(1, 3);
+                Console.Clear();
+                
+
+                switch (input)
                 {
                     case 1:
+                        
                         i = 0;
                         foreach (IItem item in merchant.items)
                         {
                             i++;
-                            Console.WriteLine(i.ToString() + ". " + item.name + 
+                            Console.WriteLine(i.ToString() + ". " + item.name +
                                 " (" + item.price + " GOLD)");
                         }
-                        Console.WriteLine((++i).ToString() + " 뒤로");
+                        Console.WriteLine((++i).ToString() + ". 뒤로");
 
-                        input = Console.ReadLine();
+                        input = Cal.CheckValidInput(1, i);
+                        if (input == i) break;
 
-                        if (int.Parse(input) == i) break;
-                        Trade(player, merchant, merchant.items[int.Parse(input)-1]);
+                        Trade(player, merchant, merchant.items[input - 1]);
 
                         break;
+
+
                     case 2:
+                        
                         i = 0;
                         foreach (IItem item in player.items)
                         {
                             i++;
-                            Console.WriteLine(i.ToString() + ". " + item.name + 
+                            Console.WriteLine(i.ToString() + ". " + item.name +
                                 " (" + item.price + " GOLD)");
                         }
-                        Console.WriteLine((++i).ToString() + " 뒤로");
+                        Console.WriteLine((++i).ToString() + ". 뒤로");
 
-                        input = Console.ReadLine();
+                        input = Cal.CheckValidInput(1, i);
+                        if (input == i) break;
 
-                        if (int.Parse(input) == i) break;
-
-                        Trade(merchant, player, player.items[int.Parse(input) - 1]);
+                        Trade(merchant, player, player.items[input - 1]);
                         break;
+
+
                     case 3:
                         return;
-                    default: 
-                        Console.WriteLine("잘못 선택했습니다");
-                        continue;
+
                 }
-
             }
-
         }
 
 
@@ -96,7 +146,7 @@ namespace TEXTRPG
                 seller.gold += item.price;
                 seller.items.Remove(item);
 
-                Console.WriteLine(buyer.name +  " : " + item.name + "을 샀습니다 \n" +
+                Console.WriteLine(buyer.name + " : " + item.name + "을 샀습니다 \n" +
                     "(" + buyer.name + " 남은 골드 " + buyer.gold + ")\n" +
                     "(" + seller.name + " 남은 골드 " + seller.gold + ")\n");
             }

@@ -8,128 +8,84 @@ namespace TEXTRPG
 {
     public class HealingPotion : Consumable
     {
+        public override ItemType type { get; set; }
         public override string name { get; }
         public override string toolTip { get; }
         public override int price { get; set; }
+        public override int health { get; set; }
 
         public HealingPotion()
         {
             name = "힐링포션";
-            toolTip = "체력을 3 회복시킵니다";
+            health = 3;
+            toolTip = "체력을 " + health + " 회복시킵니다";
             price = 10;
         }
 
         public override void Use(ICharacter ch)
         {
             Console.WriteLine(this.name + "을 사용했습니다.");
-            ch.health += 3;
+            ch.health += this.health;
             ch.items.Remove(this);
         }
     }
 
     public class IronArmor : Armor
     {
+        public override ItemType type { get; set; }
         public override string name { get; }
         public override string toolTip { get; }
         public override int price { get; set; }
+        public override int defense { get; set; }
 
         public IronArmor()
         {
+            type = ItemType.armor;
             name = "철갑옷";
-            toolTip = "최대체력+10\n튼튼한 철갑옷 입니다.";
+            defense = 10;
+            toolTip = "최대체력+" + defense + "\n튼튼한 철갑옷 입니다.";
             price = 100;
         }
 
-        public override void Equip(ICharacter ch)
-        {
-            Unclothe(ch);
-
-            Console.WriteLine(this.name + "를 장착했습니다.");
-            ch.armor = this;
-            ch.health += 10;
-            ch.items.Remove(this);
-        }
-
-        public override void Unclothe(ICharacter ch)
-        {
-            if (ch.weapon != null)
-            {
-                Console.WriteLine(ch.armor.name + "를 해제했습니다.");
-                ch.health -= 10;
-                ch.items.Add(ch.weapon);
-                ch.armor = null;
-            }
-        }
     }
 
 
     public class Stick : Weapon
     {
+        public override ItemType type { get; set; }
         public override string name { get; }
         public override string toolTip { get; }
         public override int price { get; set; }
+        public override int attack { get; set; }
 
         public Stick()
         {
             name = "나뭇가지";
-            toolTip = "공격력+1\n나뭇가지입니다. 뭘 기대하시나요?";
+            type = ItemType.weapon;
+            attack = 1;
+            toolTip = "공격력+" + attack + "\n나뭇가지입니다.";
             price = 1;
         }
 
-        public override void Equip(ICharacter ch)
-        {
-            Unclothe(ch);
-
-            Console.WriteLine(this.name + "를 장착했습니다.");
-            ch.weapon = this;
-            ch.attack += 1;
-            ch.items.Remove(this);
-        }
-
-        public override void Unclothe(ICharacter ch)
-        {
-            if (ch.weapon != null)
-            {
-                Console.WriteLine(ch.weapon.name + "를 해제했습니다.");
-                ch.attack -= 1;
-                ch.items.Add(ch.weapon);
-                ch.weapon = null;
-            }
-        }
+        
     }
 
     public class Sword : Weapon
     {
+        public override ItemType type { get; set; }
         public override string name { get; }
         public override string toolTip { get; }
         public override int price { get; set; }
+        public override int attack { get; set; }
 
         public Sword()
         {
+            type = ItemType.weapon;
             name = "한손검";
-            toolTip = "공격력+10\n날카로운 한손검 입니다.";
+            attack = 10;
+            toolTip = "공격력+" + attack + "\n날카로운 한손검 입니다.";
             price = 60;
         }
 
-        public override void Equip(ICharacter ch)
-        {
-            Unclothe(ch);
-
-            Console.WriteLine(this.name + "를 장착했습니다.");
-            ch.weapon = this;
-            ch.attack += 10;
-            ch.items.Remove(this);
-        }
-
-        public override void Unclothe(ICharacter ch)
-        {
-            if (ch.weapon != null)
-            {
-                Console.WriteLine(this.name + "를 해제했습니다.");
-                ch.attack -= 10;
-                ch.items.Add(ch.weapon);
-                ch.weapon = null;
-            }
-        }
     }
 }

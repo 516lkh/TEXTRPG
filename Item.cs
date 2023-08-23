@@ -22,6 +22,9 @@ namespace TEXTRPG
         string name { get; }
         string toolTip { get; }
         int price { get; set; }
+        int attack { get; set; }
+        int defense { get; set; }
+        int health { get; set; }
 
         void Use(ICharacter ch);
         void Equip(ICharacter ch);
@@ -31,76 +34,116 @@ namespace TEXTRPG
 
     public abstract class Weapon : IItem
     {
-        public ItemType type { get { return type; } set => type = ItemType.weapon; }
+        public abstract ItemType type { get; set; }
 
         public abstract string name { get; }
         public abstract string toolTip { get; }
         public abstract int price { get; set; }
+        public abstract int attack { get; set; }
+        public int defense { get; set; }
+        public int health { get; set; }
 
         public void Use(ICharacter ch)
         {
             Console.WriteLine("장비는 사용되지 않습니다.");
         }
-        public abstract void Equip(ICharacter ch);
-        public abstract void Unclothe(ICharacter ch);
+        public void Equip(ICharacter ch)
+        {
+            Unclothe(ch);
+
+            Console.WriteLine(this.name + " 아이템을 장착했습니다.");
+            ch.weapon = this;
+            ch.attack += this.attack;
+            ch.items.Remove(this);
+        }
+
+        public void Unclothe(ICharacter ch)
+        {
+            if (ch.weapon != null)
+            {
+                Console.WriteLine(ch.weapon.name + " 아이템을 해제했습니다.");
+                ch.attack -= ch.weapon.attack;
+                ch.items.Add(ch.weapon);
+                ch.weapon = null;
+            }
+        }
         public void Discard(ICharacter ch)
         {
-            if (ch.items.Contains(this))
-            {
-                ch.items.Remove(this);
-                Console.WriteLine(this.name + " 아이템을 버렸습니다");
-            }
+            ch.items.Remove(this);
+            Console.WriteLine(this.name + " 아이템을 버렸습니다");
+
         }
     }
 
     public abstract class Armor : IItem
     {
-        public ItemType type { get { return type; } set => type = ItemType.armor; }
+        public abstract ItemType type { get; set; }
 
         public abstract string name { get; }
         public abstract string toolTip { get; }
         public abstract int price { get; set; }
+        public int attack { get; set; }
+        public abstract int defense { get; set; }
+        public int health { get; set; }
 
         public void Use(ICharacter ch)
         {
             Console.WriteLine("장비는 사용되지 않습니다.");
         }
-        public abstract void Equip(ICharacter ch);
-        public abstract void Unclothe(ICharacter ch);
+
+        public void Equip(ICharacter ch)
+        {
+            this.Unclothe(ch);
+
+            Console.WriteLine(this.name + " 아이템을 장착했습니다.");
+            ch.armor = this;
+            ch.defense += this.defense;
+            ch.items.Remove(this);
+        }
+
+        public void Unclothe(ICharacter ch)
+        {
+            if (ch.armor != null)
+            {
+                Console.WriteLine(ch.armor.name + " 아이템을 해제했습니다.");
+                ch.defense -= ch.armor.defense;
+                ch.items.Add(ch.armor);
+                ch.armor = null;
+            }
+        }
         public void Discard(ICharacter ch)
         {
-            if (ch.items.Contains(this))
-            {
-                ch.items.Remove(this);
-                Console.WriteLine(this.name + " 아이템을 버렸습니다");
-            }
+            ch.items.Remove(this);
+            Console.WriteLine(this.name + " 아이템을 버렸습니다");
+
         }
     }
 
     public abstract class Consumable : IItem
     {
-        public ItemType type { get { return type; } set => type = ItemType.consumable; }
+        public abstract ItemType type { get; set; }
 
         public abstract string name { get; }
         public abstract string toolTip { get; }
         public abstract int price { get; set; }
+        public int attack { get; set; }
+        public int defense { get; set; }
+        public abstract int health { get; set; }
 
         public abstract void Use(ICharacter ch);
-        public  void Equip(ICharacter ch)
+        public void Equip(ICharacter ch)
         {
             Console.WriteLine("소모품은 장비되지 않습니다.");
         }
-        public  void Unclothe(ICharacter ch)
+        public void Unclothe(ICharacter ch)
         {
             Console.WriteLine("소모품은 장비해제되지 않습니다.");
         }
         public void Discard(ICharacter ch)
         {
-            if (ch.items.Contains(this))
-            {
-                ch.items.Remove(this);
-                Console.WriteLine(this.name + " 아이템을 버렸습니다");
-            }
+            ch.items.Remove(this);
+            Console.WriteLine(this.name + " 아이템을 버렸습니다");
+
         }
     }
 
